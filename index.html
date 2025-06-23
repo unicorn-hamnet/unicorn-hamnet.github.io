@@ -33,6 +33,27 @@
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
   <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+  
+  <style>
+    /* Math notation styling for closer sup/sub positioning like LaTeX */
+    .math-notation {
+      display: inline;
+      white-space: nowrap;
+    }
+    
+    .math-notation sup {
+      font-size: 0.75em;
+      vertical-align: super;
+      line-height: 0;
+    }
+    
+    .math-notation sub {
+      font-size: 0.75em;
+      vertical-align: sub;
+      line-height: 0;
+      margin-left: -0.1em;
+    }
+  </style>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
@@ -275,24 +296,97 @@
   </div>
 </section>
 
-<section class="section" id="HAMNET">
+
+<section class="section" id="Method">
   <div class="container is-max-desktop content">
-    <!-- <div class="columns is-centered has-text-centered"> -->
+    <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-    <h2 class="title"><b><u>H</u></b>ierarchical <b><u>A</u></b>nd <b><u>M</u></b>odular <b><u>Net</u></b>work (HAMNET)</h2>
-    <img src="./static/images/overall_arch.png" alt="Overall architecture">
-    <!-- </div> -->
+        <h2 class="title is-3">Method</h2>
+      </div>
     </div>
+
+    <!-- Overall -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <img src="./static/images/overall_method_v7.png" alt="Overall Method" style="width: 70%; max-width: 600px;">
+      <div class="content has-text-justified">
+        <p>
+          Our framework consists of four main components: a modular policy trained with RL, contact-based representation pre-training, a procedural domain generation scheme for environment geometries, and a simulation-to-real transfer method for real-world deployment.
+        </p>
+      </div>
+    </div>
+    </div>
+
+    <div style="margin: 3rem 0;"></div>
+
+    <!-- HAMNET Subsection -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h3 class="title is-4"><b><u>H</u></b>ierarchical <b><u>A</u></b>nd <b><u>M</u></b>odular <b><u>Net</u></b>work (HAMNET)</h3>
+        <img src="./static/images/overall_arch.png" alt="Overall architecture">
+        <div class="content has-text-justified">
+          <p>
+            Our model comprises three components – the geometry encoder (red), the modulation network
+            (green), and the base network (blue). The geometry encoder embeds the point clouds, and the modulation network maps the
+            embeddings and non-geometric state inputs to the base network's parameters θ. Conditioned on θ, the base network maps the
+            state inputs and object geometry to actions and values. Input groups tagged with different numbers ( (1), (2), and (3)) indicate
+            sets of non-geometric state inputs fed into different network parts. The inputs to cross-attention layers are concatenated and
+            tokenized by a two-layer multi-layer perceptron (MLP).
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin: 3rem 0;"></div>
+
+    <!-- UniCORN Subsection -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h3 class="title is-4"><b><u>Uni</u></b>versal <b><u>C</u></b>ontact-based <b><u>O</u></b>bject <b><u>R</u></b>epresentation for <b><u>N</u></b>onprehensile Manipulation (UniCORN)</h3>
+        <img src="./static/images/unicorn.png" alt="UniCORN architecture" style="width: 70%; max-width: 600px;">
+        <div class="content has-text-justified">
+          <p> 
+            <b>FIXME: still awful spacing between superscript and subscript</b>
+            Our pre-training architecture consists of a geometry encoder (red) and a contact decoder (green). 
+            The same geometry encoder operates on each point cloud A and B in a Siamese fashion to produce local patch embeddings <span class="math-notation">z<sup>A</sup><sub>1:N-1</sub></span>, <span class="math-notation">z<sup>B</sup><sub>1:N-1</sub></span> 
+             and global embeddings <span class="math-notation">z<sup>A</sup><sub>N</sub></span>, <span class="math-notation">z<sup>B</sup><sub>N</sub></span>. The contact decoder (green) predicts contact between each patch <span class="math-notation">z<sup>A</sup><sub>i</sub></span> ∈<span class="math-notation">z<sup>A</sup><sub>1:N-1</sub></span> and <span class="math-notation">z<sup>B</sup><sub>N</sub></span>. 
+            The bottom block details the procedure to patchify and tokenize point clouds.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="margin: 3rem 0;"></div>
+  <!-- Proceudral generation of environments -->
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h3 class="title is-4">Procedural Domain Generation</h3>
+      <video autoplay muted loop playsinline style="width: 40%; object-fit: cover;">
+        <source src="./static/videos/seq-env-gen-v3.mp4" type="video/mp4">
+      </video>
+      <div class="content has-text-justified">
+        <p>
+          We propose a procedural algorithm for generating diverse environments to train our agent.
+        </p>
+      </div>
+    </div>
+  </div>
+
+
 </section>
 
-<!-- <section class="section" id="UniCORN">
-  <div class="container is-max-desktop content">
-      <div class="column is-four-fifths">
-    <h2 class="title"><b><u>Uni</u></b>versal <b><u>C</u></b>ontact-based <b><u>O</u></b>bject <b><u>R</u></b>epresentation for <b><u>N</u></b>onprehensile Manipulation (UniCORN)</h2>
-    <img src="./static/images/unicorn.png" alt="UniCORN architecture">
+<section class="section" id="Emergent Skill Discovery">
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-four-fifths">
+      <h2 class="title is-3">Emergent Skill Discovery</h2>
+      <div class="content has-text-justified">
+        <p>
+          TODO
+        </p>
+      </div>
     </div>
-</section> -->
-
+  </div>
+</section>
 
 
 <footer class="footer">
