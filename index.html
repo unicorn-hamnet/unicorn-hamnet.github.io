@@ -194,7 +194,7 @@
                 type="video/mp4">
       </video>
       <h2 class="subtitle has-text-centered">
-        <span class="dnerf">HAMNET</span> generalize across environments with diverse geometries.
+        <span class="dnerf">HAMNET</span> generalizes across objects and environments with diverse geometries via a modular and reconfigurable architecture.
       </h2>
     </div>
   </div>
@@ -312,7 +312,7 @@
       
       <div class="content has-text-justified">
         <p>
-          Our framework consists of four main components: a modular policy trained with RL, contact-based representation pre-training, a procedural domain generation scheme for environment geometries, and a simulation-to-real transfer method for real-world deployment.
+          Our framework consists of four main components: a modular policy network architecture trained via RL, contact-based representation pre-training, a procedural domain generation scheme for environment geometries, and a simulation-to-real transfer method for real-world deployment.
         </p>
       </div>
     </div>
@@ -337,10 +337,13 @@
         <img src="./static/images/hamnet.svg" alt="hamnet architecture" style="width: 90%; max-width: 500px;">
         <div class="content has-text-justified">
           <p>
-            In HAMNet the modulation network (green) maps inputs to the base network's parameters θ. Conditioned on θ, the base network (blue) maps the
-            state inputs and object geometry to actions and values. Input groups tagged with different numbers ( (1), (2), and (3)) indicate
-            sets of non-geometric state inputs fed into different network parts. The inputs to cross-attention layers are concatenated and
-            tokenized by a two-layer multi-layer perceptron (MLP).
+            HAMNet is a hierarchical architecture where the upper-level modulation network
+            dynamically constructs the parameters of the lower-level base network.
+            Based on the input context (robot, object, scene, and the goal),
+            the modulation network (green) maps inputs to the base network's parameters θ by
+            composing the modules and passing them through feature-wise gating.
+            Conditioned on θ, the base network (blue) maps the
+            state inputs and object geometry to actions and values.
           </p>
         </div>
       </div>
@@ -350,10 +353,13 @@
         <h3 class="title is-4"><b><u>Uni</u></b>versal <b><u>C</u></b>ontact-based <b><u>O</u></b>bject <b><u>R</u></b>epresentation for <b><u>N</u></b>onprehensile Manipulation (UniCORN)</h3>
         <img src="./static/images/unicorn.png" alt="UniCORN architecture" style="width: 90%; max-width: 500px;">
         <div class="content has-text-justified">
-          <p> 
-            Our pre-training architecture uses a Siamese geometry encoder to extract local and global embeddings from point clouds A and B.
-            A contact decoder then predicts contact between each local patch of A and the global embedding of B.
-            The bottom block illustrates the patchification and tokenization process
+          <p>
+            UniCORN is a geometry representation model that learns both local and global embeddings of geometries.
+            During policy training, we use UniCORN as a lightweight and generalizable representation of object and environment geometries.
+            During pretraining, UniCORN is used in a Siamese fashion to embed two point clouds A and B.
+            Afterward, the contact decoder predicts contact between each
+            local patch of A and the global embedding of B.
+            The bottom block illustrates the patchification and tokenization process.
           </p>
         </div>
       </div>
@@ -369,66 +375,15 @@
         </video>
         <div class="content has-text-justified">
           <p>
-            Our pipeline for environment generation composes different environmental factors, 
+            We leverage procedural generation to construct diverse environment geometries
+            during our simulation-based policy training.
+            Our pipeline composes different environmental factors, 
             such as walls, ceilings, and plates at different elevations for each axis,
             to construct geometrically diverse environments.
-            This results in scenes that include real-world-like structures 
-            such as cabinets, baskets, sinks, valleys, countertops, and steps (from top left).
+            This results in scenes that include real-world-like structures,
+            such as cabinets, baskets, sinks, valleys, countertops, and steps.
           </p>
         </div>
-      </div>
-    </div>
-  </div>
-
-
-</section>
-
-<section class="section" id="Emergent Skill Discovery">
-  <div class="columns is-centered has-text-centered">
-    <div class="column is-three-fifths">
-      <h2 class="title is-3">Emergent Skill Discovery</h2>
-      <div class="content has-text-justified">
-        <p>
-          Qualitiative analysis of HAMNet reveals emergence of semantically meaningful manipulation skills.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <!-- UMAP (image) -->
-  <div class="columns is-centered has-text-centered">
-    <div class="column is-three-fifths">
-      <h3 class="title is-4">UMAP analysis reveals emergence of semantically meaningful skills</h3>
-      <video autoplay muted loop playsinline style="width: 100%; object-fit: cover;">
-        <source src="./static/videos/umap.mp4" type="video/mp4">
-      </video>
-      <div class="content has-text-justified">
-        <p>
-        After training our policy, we analyzed the latent space of the modulation embedding z<sub>T</sub> via UMAP.
-        We found that there are recurring patterns in how HAMNet determines network configurations.
-        These patterns form distinct clusters (found by HDBScan),
-        from which we observe the emergence of semantically meaningful manipulation skills,
-        such as lifting, reorientation, reaching, dropping, etc.
-        What's more, even within a particular cluster, we find that
-        HAMNet implements finger-grained behavioral nuances, where the spatial layout of the cluster
-        reflects the robot's intended lifting direction or the reorientation axis.
-        <br/> <br/>
-        For a more holistic view of the latent space of z<sub>T</sub>, see the <a href="./static/images/umap.png">overview image</a>.
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="columns is-centered has-text-centered">
-    <div class="column is-three-fifths">
-      <h3 class="title is-4">Co-activations of modules map to distinct manipulation skills</h3>
-      <img src="./static/images/domain-skill-route-v10.pdf.png" alt="Skill-routing map" style="width: 70%; max-width: 600px;">
-      <div class="content has-text-justified">
-        <p>
-        Bah
-        <br/> <br/>
-        For a more holistic view of the latent space of z<sub>T</sub>, see the <a href="./static/images/umap.png">overview image</a>.
-        </p>
       </div>
     </div>
   </div>
@@ -443,12 +398,30 @@
       </div>
     </div>
 
+    <!-- Real-world videos compilation -->
+    <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+        <h3 class="title is-4">Compilation of real-world videos</h3>
+        <video autoplay muted loop playsinline style="width: 100%; object-fit: cover;">
+            <source src="./static/videos/video1-real.mp4" type="video/mp4">
+        </video>
+        </div>
+    </div>
+
+
     <!-- Simulation and Real-World Results Side by Side -->
     <div class="columns is-centered">
       <!-- Simulation Results Column -->
       <div class="column is-half has-text-centered">
         <h3 class="title is-4">Simulation Results</h3>
         <img src="./static/images/prog-all.png" alt="simulation results" style="width: 90%; max-width: 500px;">
+        <div class="content has-text-justified">
+            <p>
+            In the simulation, we find that the joint use of our representation (UniCORN) and architecture (HAMNet)
+            results in the policy that achieves the highest performance while also training fastest.
+            Overall, the training only takes around 2 days on a single NVIDIA RTX4090 GPU to achieve 75% success rate.
+            </p>
+        </div>
       </div>
 
       <!-- Real-World Results Column -->
@@ -536,10 +509,102 @@
              </tr>
           </tbody>
         </table>
+
+      <div class="content has-text-justified">
+          <p>
+          Our real-world test validates that our framework zero-shot transfers to
+          unseen real-world dynamics across novel objects and environment geometries.
+
+          Across 9 different real-world environments with different factors such as sinks, ceilings, and walls,
+          our robot manages to achieve an overall 78.9% despite solely training in synthetic simulated environments.
+          </p>
+      </div>
       </div>
     </div>
   </div>
 </section>
+
+<section class="section" id="Emergent Skill Discovery">
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-three-fifths">
+      <h2 class="title is-3">Emergent Skill Discovery</h2>
+    </div>
+  </div>
+
+  <!-- UMAP (image) -->
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-three-fifths">
+      <h3 class="title is-4">UMAP analysis reveals emergence of semantically meaningful skills</h3>
+      <video autoplay muted loop playsinline style="width: 100%; object-fit: cover;">
+        <source src="./static/videos/umap.mp4" type="video/mp4">
+      </video>
+      <div class="content has-text-justified">
+        <p>
+        After training our policy, we analyzed the latent space of the modulation embedding z<sub>T</sub> via UMAP.
+        We found that there are emergent patterns in how HAMNet determines network configurations.
+        These patterns form distinct clusters (found by HDBScan),
+        corresponding to semantically meaningful manipulation skills,
+        such as lifting, reorientation, reaching, dropping, etc.
+        What's more, even within a particular cluster, we find that
+        HAMNet implements finger-grained behavioral nuances, where the spatial layout of the cluster
+        reflects the robot's intended lifting direction or the reorientation axis.
+        <br/> <br/>
+        For a more holistic view on the latent space of z<sub>T</sub>, also see the <a href="./static/images/umap.png">overview image</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-three-fifths">
+      <h3 class="title is-4">Co-activation patterns of modules map to distinct manipulation skills</h3>
+      <img src="./static/images/domain-skill-route-v10.pdf.png" alt="Skill-routing map" style="width: 70%; max-width: 600px;">
+      <div class="content has-text-justified">
+        <p>
+        We find that distinct co-activation patterns of modules map to distinct manipulation skills.
+        Here, we visualize 9 representative skills and the corresponding module activation map,
+        where rows denote layer and columns denote module activation strengths.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-three-fifths">
+      <h3 class="title is-4">HAMNet learns to select and sequence skills</h3>
+      <video autoplay muted loop playsinline style="width: 100%; object-fit: cover;">
+        <source src="./static/videos/phase.mp4" type="video/mp4">
+      </video>
+      <div class="content has-text-justified">
+        <p>
+        We visualize the progression of z<sub>T</sub> over the course of an episode by colorizing z<sub>T</sub> by
+        its nearest cluster label. We find that HAMNet selects task-relevant skills in a temporally consistent manner,
+        and switches to context-appropriate skills as the task progresses. For instance, in the second video,
+        after the <em>dropping</em> skill succeeds, the policy switches to reorientation and then translation to align the object to the goal.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full has-text-centered">
+        <h3 class="title is-4">BibTeX</h3>
+        <div class="content has-text-justified">
+            <pre><tt>@inproceedings{cho2025hamnet,
+  title={{Hierarchical and Modular Network on Non-prehensile Manipulation in General Environments}},
+  author={Cho, Yoonyoung and Han, Junhyek and Han, Jisu and Kim, Beomjoon},
+  booktitle={Robotics: Science and Systems (RSS)},
+  year={2025}
+}</tt></pre>
+        </div>
+      </div>
+    </div>
+
+</section>
+
 
 <footer class="footer">
   <div class="container">
