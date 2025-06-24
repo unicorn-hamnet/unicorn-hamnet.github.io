@@ -385,11 +385,49 @@
 
 <section class="section" id="Emergent Skill Discovery">
   <div class="columns is-centered has-text-centered">
-    <div class="column is-four-fifths">
+    <div class="column is-three-fifths">
       <h2 class="title is-3">Emergent Skill Discovery</h2>
       <div class="content has-text-justified">
         <p>
-          TODO
+          Qualitiative analysis of HAMNet reveals emergence of semantically meaningful manipulation skills.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- UMAP (image) -->
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-three-fifths">
+      <h3 class="title is-4">UMAP analysis reveals emergence of semantically meaningful skills</h3>
+      <video autoplay muted loop playsinline style="width: 100%; object-fit: cover;">
+        <source src="./static/videos/umap.mp4" type="video/mp4">
+      </video>
+      <div class="content has-text-justified">
+        <p>
+        After training our policy, we analyzed the latent space of the modulation embedding z<sub>T</sub> via UMAP.
+        We found that there are recurring patterns in how HAMNet determines network configurations.
+        These patterns form distinct clusters (found by HDBScan),
+        from which we observe the emergence of semantically meaningful manipulation skills,
+        such as lifting, reorientation, reaching, dropping, etc.
+        What's more, even within a particular cluster, we find that
+        HAMNet implements finger-grained behavioral nuances, where the spatial layout of the cluster
+        reflects the robot's intended lifting direction or the reorientation axis.
+        <br/> <br/>
+        For a more holistic view of the latent space of z<sub>T</sub>, see the <a href="./static/images/umap.png">overview image</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-three-fifths">
+      <h3 class="title is-4">Co-activations of modules map to distinct manipulation skills</h3>
+      <img src="./static/images/domain-skill-route-v10.pdf.png" alt="Skill-routing map" style="width: 70%; max-width: 600px;">
+      <div class="content has-text-justified">
+        <p>
+        Bah
+        <br/> <br/>
+        For a more holistic view of the latent space of z<sub>T</sub>, see the <a href="./static/images/umap.png">overview image</a>.
         </p>
       </div>
     </div>
