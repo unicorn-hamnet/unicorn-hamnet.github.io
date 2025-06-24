@@ -190,7 +190,7 @@
   <div class="container is-max-desktop">
     <div class="hero-body">
       <video id="teaser" autoplay muted loop playsinline height="100%">
-        <source src="./static/videos/video-cat.mp4"
+        <source src="./static/videos/rss-video.mp4"
                 type="video/mp4">
       </video>
       <h2 class="subtitle has-text-centered">
@@ -300,15 +300,16 @@
 <section class="section" id="Method">
   <div class="container is-max-desktop content">
     <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
+      <div class="column is-full">
         <h2 class="title is-3">Method</h2>
       </div>
     </div>
 
     <!-- Overall -->
     <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <img src="./static/images/overall_method_v7.png" alt="Overall Method" style="width: 70%; max-width: 600px;">
+      <div class="column is-full">
+      <img src="./static/images/overall_method_v7.png" alt="Overall Method" style="width: 70%; max-width: 600px;">
+      
       <div class="content has-text-justified">
         <p>
           Our framework consists of four main components: a modular policy trained with RL, contact-based representation pre-training, a procedural domain generation scheme for environment geometries, and a simulation-to-real transfer method for real-world deployment.
@@ -317,57 +318,62 @@
     </div>
     </div>
 
-    <div style="margin: 3rem 0;"></div>
+    <div style="margin: 1.5rem 0;"></div>
 
     <!-- HAMNET Subsection -->
     <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
+      <div class="column is-full">
+        <h2 class="title is-3">Overall Architecture</h2>
+        <img src="./static/images/main.svg" alt="Overall architecture">
+      </div>
+    </div>
+    <div style="margin: 1rem 0;"></div>
+
+    <!-- HAMNET and UniCORN Side by Side -->
+    <div class="columns is-centered">
+      <!-- HAMNET Column -->
+      <div class="column is-half has-text-centered">
         <h3 class="title is-4"><b><u>H</u></b>ierarchical <b><u>A</u></b>nd <b><u>M</u></b>odular <b><u>Net</u></b>work (HAMNET)</h3>
-        <img src="./static/images/overall_arch.png" alt="Overall architecture">
+        <img src="./static/images/hamnet.svg" alt="hamnet architecture" style="width: 90%; max-width: 500px;">
         <div class="content has-text-justified">
           <p>
-            Our model comprises three components – the geometry encoder (red), the modulation network
-            (green), and the base network (blue). The geometry encoder embeds the point clouds, and the modulation network maps the
-            embeddings and non-geometric state inputs to the base network's parameters θ. Conditioned on θ, the base network maps the
+            In HAMNet the modulation network (green) maps inputs to the base network's parameters θ. Conditioned on θ, the base network (blue) maps the
             state inputs and object geometry to actions and values. Input groups tagged with different numbers ( (1), (2), and (3)) indicate
             sets of non-geometric state inputs fed into different network parts. The inputs to cross-attention layers are concatenated and
             tokenized by a two-layer multi-layer perceptron (MLP).
           </p>
         </div>
       </div>
-    </div>
 
-    <div style="margin: 3rem 0;"></div>
-
-    <!-- UniCORN Subsection -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
+      <!-- UniCORN Column -->
+      <div class="column is-half has-text-centered">
         <h3 class="title is-4"><b><u>Uni</u></b>versal <b><u>C</u></b>ontact-based <b><u>O</u></b>bject <b><u>R</u></b>epresentation for <b><u>N</u></b>onprehensile Manipulation (UniCORN)</h3>
-        <img src="./static/images/unicorn.png" alt="UniCORN architecture" style="width: 70%; max-width: 600px;">
+        <img src="./static/images/unicorn.png" alt="UniCORN architecture" style="width: 90%; max-width: 500px;">
         <div class="content has-text-justified">
           <p> 
-            <b>FIXME: still awful spacing between superscript and subscript</b>
-            Our pre-training architecture consists of a geometry encoder (red) and a contact decoder (green). 
-            The same geometry encoder operates on each point cloud A and B in a Siamese fashion to produce local patch embeddings <span class="math-notation">z<sup>A</sup><sub>1:N-1</sub></span>, <span class="math-notation">z<sup>B</sup><sub>1:N-1</sub></span> 
-             and global embeddings <span class="math-notation">z<sup>A</sup><sub>N</sub></span>, <span class="math-notation">z<sup>B</sup><sub>N</sub></span>. The contact decoder (green) predicts contact between each patch <span class="math-notation">z<sup>A</sup><sub>i</sub></span> ∈<span class="math-notation">z<sup>A</sup><sub>1:N-1</sub></span> and <span class="math-notation">z<sup>B</sup><sub>N</sub></span>. 
-            The bottom block details the procedure to patchify and tokenize point clouds.
+            Our pre-training architecture uses a Siamese geometry encoder to extract local and global embeddings from point clouds A and B.
+            A contact decoder then predicts contact between each local patch of A and the global embedding of B.
+            The bottom block illustrates the patchification and tokenization process
           </p>
         </div>
       </div>
     </div>
-  </div>
-  <div style="margin: 3rem 0;"></div>
-  <!-- Proceudral generation of environments -->
-  <div class="columns is-centered has-text-centered">
-    <div class="column is-four-fifths">
-      <h3 class="title is-4">Procedural Domain Generation</h3>
-      <video autoplay muted loop playsinline style="width: 40%; object-fit: cover;">
-        <source src="./static/videos/seq-env-gen-v3.mp4" type="video/mp4">
-      </video>
-      <div class="content has-text-justified">
-        <p>
-          We propose a procedural algorithm for generating diverse environments to train our agent.
-        </p>
+
+    <div style="margin: 3rem 0;"></div>
+    <!-- Procedural generation of environments -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h3 class="title is-4">Procedural Domain Generation</h3>
+        <video autoplay muted loop playsinline style="width: 80%; object-fit: cover;">
+          <source src="./static/videos/seq-env-gen-v3.mp4" type="video/mp4">
+        </video>
+        <div class="content has-text-justified">
+          <p>
+            Our pipeline for environment generation composes different environmental factors, 
+            such as walls, ceilings, and plates at different elevations for each axis,
+            to construct geometrically diverse environments.
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -388,6 +394,112 @@
   </div>
 </section>
 
+<section class="section" id="Results">
+  <div class="container is-max-desktop">
+    <!-- Results Title -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full">
+        <h2 class="title is-3">Results</h2>
+      </div>
+    </div>
+
+    <!-- Simulation and Real-World Results Side by Side -->
+    <div class="columns is-centered">
+      <!-- Simulation Results Column -->
+      <div class="column is-half has-text-centered">
+        <h3 class="title is-4">Simulation Results</h3>
+        <img src="./static/images/prog-all.png" alt="simulation results" style="width: 90%; max-width: 500px;">
+      </div>
+
+      <!-- Real-World Results Column -->
+      <div class="column is-half has-text-centered">
+        <h3 class="title is-4">Real-World Results</h3>
+        <table class="table is-bordered is-narrow is-hoverable" style="margin: 0 auto; font-size: 0.9rem; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <thead>
+            <tr>
+              <th style="text-align: center;"><strong>Domain</strong></th>
+              <th style="text-align: center;"><strong>Object</strong></th>
+              <th style="text-align: center;"><strong>Success rate</strong></th>
+              <th style="text-align: center;"><strong>Domain</strong></th>
+              <th style="text-align: center;"><strong>Object</strong></th>
+              <th style="text-align: center;"><strong>Success rate</strong></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+                             <td rowspan="2" style="text-align: center; vertical-align: middle; background-color: #f8f9fa; font-weight: bold;"><strong>Cabinet</strong></td>
+              <td style="text-align: center;">Bulldozer</td>
+              <td style="text-align: center;">4/5</td>
+                             <td rowspan="2" style="text-align: center; vertical-align: middle; background-color: #f8f9fa; font-weight: bold;"><strong>Top of cabinet</strong></td>
+              <td style="text-align: center;">Bulldozer</td>
+              <td style="text-align: center;">3/5</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">Heart-Box</td>
+              <td style="text-align: center;">3/5</td>
+              <td style="text-align: center;">Crab</td>
+              <td style="text-align: center;">4/5</td>
+            </tr>
+            <tr>
+                             <td rowspan="2" style="text-align: center; vertical-align: middle; background-color: #f8f9fa; font-weight: bold;"><strong>Sink</strong></td>
+               <td style="text-align: center;">Bulldozer</td>
+               <td style="text-align: center;">5/5</td>
+               <td rowspan="2" style="text-align: center; vertical-align: middle; background-color: #f8f9fa; font-weight: bold;"><strong>Basket</strong></td>
+              <td style="text-align: center;">Bulldozer</td>
+              <td style="text-align: center;">3/5</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">Angled Cup</td>
+              <td style="text-align: center;">4/5</td>
+              <td style="text-align: center;">Heart-Box</td>
+              <td style="text-align: center;">5/5</td>
+            </tr>
+            <tr>
+                             <td rowspan="2" style="text-align: center; vertical-align: middle; background-color: #f8f9fa; font-weight: bold;"><strong>Drawer</strong></td>
+               <td style="text-align: center;">Bulldozer</td>
+               <td style="text-align: center;">4/5</td>
+               <td rowspan="2" style="text-align: center; vertical-align: middle; background-color: #f8f9fa; font-weight: bold;"><strong>Grill</strong></td>
+              <td style="text-align: center;">Bulldozer</td>
+              <td style="text-align: center;">5/5</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">Pencil case</td>
+              <td style="text-align: center;">3/5</td>
+              <td style="text-align: center;">Dino</td>
+              <td style="text-align: center;">4/5</td>
+            </tr>
+            <tr>
+                             <td rowspan="2" style="text-align: center; vertical-align: middle; background-color: #f8f9fa; font-weight: bold;"><strong>Circular bin</strong></td>
+               <td style="text-align: center;">Bulldozer</td>
+               <td style="text-align: center;">4/5</td>
+               <td rowspan="2" style="text-align: center; vertical-align: middle; background-color: #f8f9fa; font-weight: bold;"><strong>Flat</strong></td>
+              <td style="text-align: center;">Bulldozer</td>
+              <td style="text-align: center;">5/5</td>
+            </tr>
+            <tr>
+              <td style="text-align: center;">Pineapple</td>
+              <td style="text-align: center;">3/5</td>
+              <td style="text-align: center;">Nutella</td>
+              <td style="text-align: center;">3/5</td>
+            </tr>
+                         <tr>
+               <td rowspan="2" style="text-align: center; vertical-align: middle; background-color: #f8f9fa; font-weight: bold;"><strong>Suitcase</strong></td>
+               <td style="text-align: center;">Bulldozer</td>
+               <td style="text-align: center;">4/5</td>
+               <td rowspan="2" style="text-align: center; vertical-align: middle; background-color: #f5f5f5;"><strong>Total</strong></td>
+               <td rowspan="2" style="text-align: center; vertical-align: middle; background-color: #f5f5f5;"></td>
+               <td rowspan="2" style="text-align: center; vertical-align: middle; background-color: #f5f5f5;"><strong>78.9%</strong></td>
+             </tr>
+             <tr>
+               <td style="text-align: center;">Candy Jar</td>
+               <td style="text-align: center;">5/5</td>
+             </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer class="footer">
   <div class="container">
